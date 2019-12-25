@@ -257,7 +257,7 @@ export default {
         if (this.dataForm.clId) {
           this.$http({
             url: this.$http.adornUrl(
-              `/generator/wisdplatcailiao/info/${this.dataForm.clId}`
+              `/cailiao/wisdplatcailiao/info/${this.dataForm.clId}`
             ),
             method: "get",
             params: this.$http.adornParams()
@@ -305,7 +305,7 @@ export default {
         if (valid) {
           this.$http({
             url: this.$http.adornUrl(
-              `/generator/wisdplatcailiao/${
+              `/cailiao/wisdplatcailiao/${
                 !this.dataForm.clId ? "save" : "update"
               }`
             ),
