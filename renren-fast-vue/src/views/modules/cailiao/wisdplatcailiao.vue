@@ -2,23 +2,23 @@
   <div class="mod-config">
     <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
       <el-form-item>
-        <el-input v-model="dataForm.clNo" placeholder="材料编号"  clearable @input="getDataList()"></el-input>
+        <el-input v-model="dataForm.clNo" placeholder="材料编号" class="inputCls"  clearable @input="getDataList()"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="dataForm.clName" placeholder="材料名称" clearable @input="getDataList()"></el-input>
+        <el-input v-model="dataForm.clName" placeholder="材料名称" class="inputCls" clearable @input="getDataList()"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="dataForm.clPaihao" placeholder="材料牌号" clearable @input="getDataList()"></el-input>
+        <el-input v-model="dataForm.clPaihao" placeholder="材料牌号" class="inputCls" clearable @input="getDataList()"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="dataForm.clWendu" placeholder="温度" clearable @input="getDataList()"></el-input>
+        <el-input v-model="dataForm.clWendu" placeholder="温度" class="inputCls" clearable @input="getDataList()"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="dataForm.clChangjia" placeholder="厂家" clearable @input="getDataList()"></el-input>
+        <el-input v-model="dataForm.clChangjia" placeholder="厂家" class="inputCls" clearable @input="getDataList()"></el-input>
       </el-form-item>
       <el-form-item>
         <!-- <el-input v-model="dataForm.key" placeholder="分类" clearable></el-input> -->
-        <el-select v-model="dataForm.clFenleiId" placeholder="材料类型"  @change="getDataList()">
+        <el-select v-model="dataForm.clFenleiId" placeholder="材料类型"  class="inputCls" @change="getDataList()">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -308,3 +308,8 @@
     }
   }
 </script>
+<style>
+  .inputCls{
+     width:160px;
+  }
+</style>
