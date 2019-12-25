@@ -85,7 +85,7 @@
       <el-col :span="12">
         <el-button  size="small" type="primary" @click="hanleClick" class="chooseButton"  style="margin-bottom:10px;">选取Excel文件</el-button>
         <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
-
+        <input type="file" name="filename" id="openfile" style="display:none;"/>
         <!-- <tmchart ref="addOrUpaterChart" :sendData="this.curveIdList" :width="600" :height="400"></tmchart> -->
         <br />
         <!-- <div id="myChart" class="chart-box" :option="option" :width="600" :height="400"></div> -->
@@ -405,9 +405,9 @@
         this.option.series = [];
       },
 
-      //临时点击事件
+      //选择Excel
       hanleClick(){
-        console.log("yyyyyyyyyyyyyyyyyy");
+        document.getElementById("openfile").click();
       }
     }
   };
