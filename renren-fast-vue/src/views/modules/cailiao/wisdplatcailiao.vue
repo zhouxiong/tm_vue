@@ -31,7 +31,8 @@
         <!-- <el-button @click="getDataList()">查询</el-button> -->
         <el-button type="info" style="margin-left: 8px" @click="clearHandle" icon="redo">重置</el-button>
         <el-button v-if="isAuth('cailiao:wisdplatcailiao:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
-        <el-button v-if="isAuth('cailiao:wisdplatcailiao:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button v-if="isAuth('cailiao:wisdplatcailiao:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">删除</el-button>
+        <el-button type="default" @click="exportHandle()">导出</el-button>
       </el-form-item>
     </el-form>
     <el-table
