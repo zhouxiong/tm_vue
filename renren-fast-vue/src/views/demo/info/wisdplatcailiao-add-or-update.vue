@@ -83,16 +83,14 @@
         </el-form>
       </el-col>
       <el-col :span="12">
-          <el-button  size="small" type="primary" @click="hanleClick" class="chooseButton"  style="margin-bottom:10px;">选取Excel文件</el-button>
+          <el-button  size="small" type="primary" @click="hanleClick" class="chooseButton"  style="margin-bottom:10px;">111选取Excel文件</el-button>
           <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
      
         <!-- <tmchart ref="addOrUpaterChart" :sendData="this.curveIdList" :width="600" :height="400"></tmchart> -->
         <br />
         <!-- <div id="myChart" class="chart-box" :option="option" :width="600" :height="400"></div> -->
 
-        <!-- <keep-alive exclude="home"> -->
         <div id="myChart" :style="{width: '600px', height: '400px'}" :option="option"></div>
-        <!-- </keep-alive> -->
       </el-col>
     </el-row>
     <span slot="footer" class="dialog-footer">

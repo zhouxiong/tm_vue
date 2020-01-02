@@ -83,9 +83,22 @@
         </el-form>
       </el-col>
       <el-col :span="12">
-        <el-button  size="small" type="primary" @click="hanleClick" class="chooseButton"  style="margin-bottom:10px;">选取Excel文件</el-button>
+        <el-upload
+          class="upload-demo"
+          ref="upload"
+          :action="actionPath"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :file-list="fileList"
+          :auto-upload="false">
+          <el-button slot="trigger" size="small" type="primary">选取Excel文件</el-button>
+          <!-- <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button> -->
+        </el-upload>
+
+       <!-- <el-button  size="small" type="primary" @click="hanleClick" class="chooseButton"  style="margin-bottom:10px;">选取Excel文件</el-button> -->
         <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
-        <input type="file" name="filename" id="openfile" style="display:none;"/>
+        <input type="file" name="filename" id="openfile" style="display:none;" @click="showRealPath()"/>
+
         <!-- <tmchart ref="addOrUpaterChart" :sendData="this.curveIdList" :width="600" :height="400"></tmchart> -->
         <br />
         <!-- <div id="myChart" class="chart-box" :option="option" :width="600" :height="400"></div> -->
@@ -110,6 +123,8 @@
     components: { tmchart },
     data() {
       return {
+        files:[],
+        fileid:'',
         chartLine: null,
         curveIdList: [],
         value: "",
@@ -407,9 +422,10 @@
 
       //选择Excel
       hanleClick(){
-        document.getElementById("openfile").click();
+      //  document.getElementById("openfile").click();
+       // console.log("===="+document.getElementById('open').file.path)
+      },
       }
-    }
   };
 </script>
 <style scoped>
