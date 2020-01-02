@@ -5,7 +5,7 @@
         <el-input v-model="dataForm.clNo" placeholder="材料编号" class="inputCls"  clearable @input="getDataList()"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="dataForm.clName" placeholder="材料名称" class="inputCls" clearable @input="getDataList()"></el-input>
+        <el-input v-model="dataForm.clName" placeholder="材料名称" class="inputCls"  clearable @input="getDataList()"></el-input>
       </el-form-item>
       <el-form-item>
         <el-input v-model="dataForm.clPaihao" placeholder="材料牌号" class="inputCls" clearable @input="getDataList()"></el-input>
@@ -32,7 +32,8 @@
         <el-button type="info" style="margin-left: 8px" @click="clearHandle" icon="redo">重置</el-button>
         <el-button v-if="isAuth('cailiao:wisdplatcailiao:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
         <el-button v-if="isAuth('cailiao:wisdplatcailiao:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">删除</el-button>
-        <el-button type="default" @click="exportHandle()">导出</el-button>
+        <el-button type="success" @click="exportHandle()"   :disabled="dataListSelections.length<=0 || dataListSelections.length>1">导出</el-button>
+
       </el-form-item>
     </el-form>
     <el-table
@@ -85,6 +86,12 @@
         label="厂家">
       </el-table-column>
       <el-table-column
+        prop="clFenleiId"
+        header-align="center"
+        align="center"
+        label="分类">
+      </el-table-column>
+      <el-table-column
         prop="clMidu"
         header-align="center"
         align="center"
@@ -102,42 +109,8 @@
         align="center"
         label="弹性模量(Mpa)">
       </el-table-column>
-      <el-table-column
-        prop="clSigy"
-        header-align="center"
-        align="center"
-        label="SIGY(Mpa)">
-      </el-table-column>
-      <el-table-column
-        prop="clEtan"
-        header-align="center"
-        align="center"
-        label="ETAN">
-      </el-table-column>
-      <el-table-column
-        prop="clFail"
-        header-align="center"
-        align="center"
-        label="FAIL">
-      </el-table-column>
-      <el-table-column
-        prop="clC"
-        header-align="center"
-        align="center"
-        label="C">
-      </el-table-column>
-      <el-table-column
-        prop="clP"
-        header-align="center"
-        align="center"
-        label="P">
-      </el-table-column>
-      <el-table-column
-        prop="clFenleiId"
-        header-align="center"
-        align="center"
-        label="分类">
-      </el-table-column>
+
+
       <!-- <el-table-column
         prop="clFileAddr"
         header-align="center"
@@ -191,12 +164,15 @@
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
     <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+    <export-cailiao v-if="exportVisible" ref="exportCailiao"></export-cailiao>
   </div>
 </template>
 
 <script>
   /* eslint-disable */
   import AddOrUpdate from './wisdplatcailiao-add-or-update'
+  import ExportCailiao from './wisdplat-export'
+  import ElButton from "element-ui/packages/button/src/button";
   export default {
     data () {
       return {
@@ -210,6 +186,7 @@
         dataListLoading: false,
         dataListSelections: [],
         addOrUpdateVisible: false,
+        exportVisible:false,
         options: [{
           value: '金属',
           label: '金属'
@@ -221,7 +198,9 @@
       }
     },
     components: {
-      AddOrUpdate
+      ElButton,
+      AddOrUpdate,
+      ExportCailiao
     },
     activated () {
       this.getDataList()
@@ -270,6 +249,17 @@
         this.$nextTick(() => {
           this.$refs.addOrUpdate.init(id)
       })
+      },
+      //导出
+      exportHandle (id){
+        var ids = id ? [id] : this.dataListSelections.map(item => {
+          return item.clId
+        })
+        //调用dialog
+        this.exportVisible=true
+        this.$nextTick(() => {
+          this.$refs.exportCailiao.init(ids)
+         })
       },
       // 删除
       deleteHandle (id) {
