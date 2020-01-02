@@ -83,9 +83,30 @@
         </el-form>
       </el-col>
       <el-col :span="12">
+        <!--
         <el-button  size="small" type="primary" @click="hanleClick" class="chooseButton"  style="margin-bottom:10px;">选取Excel文件</el-button>
+        -->
+        <el-upload
+          class="upload-demo"
+          drag
+          :before-upload="beforeUpload"
+          :on-exceed="handleExceed"
+          :limit="1"
+        :http-request="uploadFile"
+        multiple
+        ref="upload"
+        action
+        >
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">
+          将文件拖到此处，或
+          <em>点击上传</em>
+        </div>
+        <div class="el-upload__tip" slot="tip">只能上传Excel文件，且不超过500kb</div>
+        </el-upload>
+
         <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
-        <input type="file" name="filename" id="openfile" style="display:none;"/>
+        <input type="file" name="filename" id="openfile" style="display:none;" @change="excelFile()"/>
         <!-- <tmchart ref="addOrUpaterChart" :sendData="this.curveIdList" :width="600" :height="400"></tmchart> -->
         <br />
         <!-- <div id="myChart" class="chart-box" :option="option" :width="600" :height="400"></div> -->
@@ -160,26 +181,12 @@
           clChangjia: [
             { required: true, message: "厂家不能为空", trigger: "blur" }
           ],
-          clMidu: [
-            {
-              required: true,
-              message: "材料密度(t/mm3)不能为空",
-              trigger: "blur"
-            }
-          ],
           clBosongbi: [
             { required: true, message: "泊松比不能为空", trigger: "blur" }
           ],
           clMoliang: [
             { required: true, message: "弹性模量(Mpa)不能为空", trigger: "blur" }
           ],
-          clSigy: [
-            { required: true, message: "SIGY(Mpa)不能为空", trigger: "blur" }
-          ],
-          clEtan: [{ required: true, message: "ETAN不能为空", trigger: "blur" }],
-          clFail: [{ required: true, message: "FAIL不能为空", trigger: "blur" }],
-          clC: [{ required: true, message: "C不能为空", trigger: "blur" }],
-          clP: [{ required: true, message: "P不能为空", trigger: "blur" }],
           clFenleiId: [
             { required: true, message: "分类不能为空", trigger: "blur" }
           ]
@@ -278,11 +285,9 @@
             this.dataForm.clP = data.wisdplatCailiao.clP;
             this.dataForm.clFenleiId = data.wisdplatCailiao.clFenleiId;
             this.dataForm.clFileAddr = data.wisdplatCailiao.clFileAddr;
-            this.dataForm.clCreatePerson =
-              data.wisdplatCailiao.clCreatePerson;
+            this.dataForm.clCreatePerson =data.wisdplatCailiao.clCreatePerson;
             this.dataForm.clCreateDate = data.wisdplatCailiao.clCreateDate;
-            this.dataForm.clUpdatePerson =
-              data.wisdplatCailiao.clUpdatePerson;
+            this.dataForm.clUpdatePerson = data.wisdplatCailiao.clUpdatePerson;
             this.dataForm.clUpdateDate = data.wisdplatCailiao.clUpdateDate;
             this.curveIdList = data.wisdplatCailiao.curveIdList;
             this.drawLine();
@@ -303,6 +308,33 @@
       dataFormSubmit() {
         this.$refs["dataForm"].validate(valid => {
           if (valid) {
+            const fileObj = this.file;
+            var fileData = new FormData();
+            if(""!=fileObj && null!=fileObj && undefined!=fileObj) {
+              fileData.append("file", fileObj);
+            }
+            fileData.append("clId",this.dataForm.clId);
+            fileData.append("clNo", this.dataForm.clNo);
+            fileData.append("clName",this.dataForm.clName);
+            fileData.append("clPaihao",this.dataForm.clPaihao);
+            fileData.append("clWendu",this.dataForm.clWendu);
+            fileData.append("clChangjia",this.dataForm.clChangjia);
+            fileData.append("clMidu",this.dataForm.clMidu);
+            fileData.append("clBosongbi", this.dataForm.clBosongbi);
+            fileData.append("clMoliang", this.dataForm.clMoliang);
+            fileData.append("clSigy",this.dataForm.clSigy);
+            fileData.append("clEtan",this.dataForm.clEtan);
+            fileData.append("clFail", this.dataForm.clFail);
+            fileData.append("clC",this.dataForm.clC);
+            fileData.append("clP",this.dataForm.clP);
+            fileData.append("clFenleiId",this.dataForm.clFenleiId);
+            fileData.append("clFileAddr", this.dataForm.clFileAddr);
+            let headers = {
+              "Content-Type": "multipart/form-data"
+
+            };
+            this.uploading = true;
+
             this.$http({
               url: this.$http.adornUrl(
                 `/cailiao/wisdplatcailiao/${
@@ -310,30 +342,12 @@
                   }`
               ),
               method: "post",
-              data: this.$http.adornData({
-                clId: this.dataForm.clId || undefined,
-                clNo: this.dataForm.clNo,
-                clName: this.dataForm.clName,
-                clPaihao: this.dataForm.clPaihao,
-                clWendu: this.dataForm.clWendu,
-                clChangjia: this.dataForm.clChangjia,
-                clMidu: this.dataForm.clMidu,
-                clBosongbi: this.dataForm.clBosongbi,
-                clMoliang: this.dataForm.clMoliang,
-                clSigy: this.dataForm.clSigy,
-                clEtan: this.dataForm.clEtan,
-                clFail: this.dataForm.clFail,
-                clC: this.dataForm.clC,
-                clP: this.dataForm.clP,
-                clFenleiId: this.dataForm.clFenleiId,
-                clFileAddr: this.dataForm.clFileAddr,
-                // clCreatePerson: this.dataForm.clCreatePerson,
-                // clCreateDate: this.dataForm.clCreateDate,
-                // clUpdatePerson: this.dataForm.clUpdatePerson,
-                // clUpdateDate: this.dataForm.clUpdateDate
-              })
+              headers: headers,
+              data: fileData
+
             }).then(({ data }) => {
               if (data && data.code === 0) {
+              this.uploadDialog = false;
               this.$message({
                 message: "操作成功",
                 type: "success",
@@ -366,17 +380,24 @@
           i < this.curveIdList.length;
           i++ //遍历当前数组)
         ) {
-          if (!this.curveIdList[i].wcXishu) {
-            if (!n[this.curveIdList[i].wcNo]) {
-              //如果hash表中没有当前项
-              const temp = {};
-              n[this.curveIdList[i].wcNo] = true; //存入hash表
-              r.push(this.curveIdList[i].wcNo); //把当前数组的当前项push到临时数组里面
-            }
-            if (this.curveIdList[i].wcNo === r[0]) {
+          if (this.curveIdList[i].wcXishu!=null && this.curveIdList[i].wcXishu!="") {
+
+            if (this.curveIdList[i].wcNo != null && this.curveIdList[i].wcNo != "") {
+              r.push(this.curveIdList[i].wcNo);
               x.push(this.curveIdList[i].wcX);
             }
           }
+          //if (!this.curveIdList[i].wcXishu) {
+            //if (!n[this.curveIdList[i].wcNo]) {
+              //如果hash表中没有当前项
+              //const temp = {};
+              //n[this.curveIdList[i].wcNo] = true; //存入hash表
+              //r.push(this.curveIdList[i].wcNo); //把当前数组的当前项push到临时数组里面
+            //}
+            //if (this.curveIdList[i].wcNo === r[0]) {
+              //x.push(this.curveIdList[i].wcX);
+            //}
+          //}
         }
         //根据 曲线ID号进行 Y坐标 分组;
         for (var i = 0; i < r.length; i++) {
@@ -405,12 +426,84 @@
         this.option.series = [];
       },
 
-      //选择Excel
-      hanleClick(){
-        document.getElementById("openfile").click();
+
+      hanleClick(event){
+        //执行上传功能
+        const fileObj = this.file;
+        var fileData = new FormData();
+        fileData.append("file", fileObj);
+        let headers = {
+          "Content-Type": "multipart/form-data"
+        };
+        this.uploading = true;
+        this.$http({
+          method: "post",
+          url: this.$http.adornUrl(
+            `/cailiao/wisdplatcurve/uploadExcel`
+          ),
+          headers: headers,
+          data: fileData
+        }).then(res => {
+          if (res.data.code === 200) {
+          this.$message.success(res.data.msg);
+          this.uploadDialog = false;
+        } else {
+          this.$message.error(res.data.msg);
+        }
+      });
+        setTimeout(function() {
+          this.uploading = false;
+        }, 1500);
+      },
+      beforeUpload(file) {
+        if (file.type == "" || file.type == null || file.type == undefined) {
+          const FileExt = file.name.replace(/.+\./, "").toLowerCase();
+          if (
+            FileExt == "xls" ||
+            FileExt == "xlsx" ||
+            FileExt == "XLS" ||
+            FileExt == "XLSX"
+          ) {
+            return true;
+          } else {
+            this.$message.error("上传文件必须是Excel格式!");
+            return false;
+          }
+        } else {
+          const isText = file.type === "application/vnd.ms-excel";
+          const isTextComputer =
+            file.type ===
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+          if (!isText && !isTextComputer) {
+            this.$message.error("上传文件必须是Excel格式!");
+          }
+          return isText || isTextComputer;
+        }
+      },
+      //上传文件个数超过定义的数量
+      handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 1 个文件，请删除后继续上传`);
+      },
+      uploadFile(item) {
+        this.file = item.file;
+      },
+      excelFile() {
+        let msg=new FormData();
+        msg.append('file', document.getElementById("openfile").files[0])
+        let config = {
+          headers:{'Content-Type':'multipart/form-data'}
+        };
+        //var instance = axios.create({
+          //headers: {'content-type': 'application/x-www-form-urlencoded'}
+        //});
+        this.$http.post('/cailiao/wisdplatcurve/uploadExcel',msg,config).then(response=>{
+          console.log(response.data);
+         })
+
       }
     }
   };
+
 </script>
 <style scoped>
   .chooseButton {
