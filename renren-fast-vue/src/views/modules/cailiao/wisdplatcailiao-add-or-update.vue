@@ -6,7 +6,7 @@
     width="70%"
   >
     <el-row :gutter="24">
-      <el-col :span="12">
+      <el-col :span="14">
         <el-form
           :inline="true"
           :model="dataForm"
@@ -127,7 +127,7 @@
           </el-form-item>-->
         </el-form>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="10">
         <!--
         <el-button  size="small" type="primary" @click="hanleClick" class="chooseButton"  style="margin-bottom:10px;">选取Excel文件</el-button>
         -->
@@ -148,7 +148,7 @@
                 将文件拖到此处，或
                 <em>点击上传</em>
             </span>
-            
+
             <div class="el-upload__tip" slot="tip">只能上传Excel文件，且不超过500kb</div>
           </el-upload>
 
@@ -165,7 +165,7 @@
         <!-- <div id="myChart" class="chart-box" :option="option" :width="600" :height="400"></div> -->
 
         <!-- <keep-alive exclude="home"> -->
-        <div id="myChart" :style="{width: '600px', height: '400px'}" :option="option"></div>
+        <div id="myChart" :style="{width: '400px', height: '400px'}" :option="option"></div>
         <!-- </keep-alive> -->
       </el-col>
     </el-row>
@@ -265,7 +265,7 @@ export default {
       },
       option: {
         title: {
-          text: "LCSS曲线图"
+          text: "LCSS"
         },
         legend: {
           data: []
@@ -412,6 +412,8 @@ export default {
           }).then(({ data }) => {
             if (data && data.code === 0) {
               this.uploadDialog = false;
+              this.$refs.upload.clearFiles();
+              this.file='';
               this.$message({
                 message: "操作成功",
                 type: "success",
@@ -602,7 +604,7 @@ export default {
   border-radius: 6px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  width: 240%;
+  width: 150%;
   height: 60px;
   text-align: center;
   position: relative;
@@ -618,9 +620,9 @@ export default {
 
 .el-dialog__body {
     padding: 30px 20px;
-    color: 
+    color:
     #606266;
-    line-height: 14px;
+    line-height: 24px;
     font-size: 14px;
 }
 </style>
