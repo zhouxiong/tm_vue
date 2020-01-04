@@ -30,8 +30,8 @@
       <el-form-item>
         <!-- <el-button @click="getDataList()">查询</el-button> -->
          <el-button type="info" style="margin-left: 8px" @click="clearHandle" icon="redo">重置</el-button>
-        <el-button v-if="isAuth('generator:wisdplatcailiao:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
-        <el-button v-if="isAuth('generator:wisdplatcailiao:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button v-if="isAuth('cailiao:wisdplatcailiao:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
+        <el-button v-if="isAuth('cailiao:wisdplatcailiao:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -230,7 +230,7 @@
       getDataList () {
         this.dataListLoading = true
         this.$http({
-          url: this.$http.adornUrl('/generator/wisdplatcailiao/list'),
+          url: this.$http.adornUrl('/cailiao/wisdplatcailiao/list'),
           method: 'get',
           params: this.$http.adornParams({
             'page': this.pageIndex,
@@ -281,7 +281,7 @@
           type: 'warning'
         }).then(() => {
           this.$http({
-            url: this.$http.adornUrl('/generator/wisdplatcailiao/delete'),
+            url: this.$http.adornUrl('/cailiao/wisdplatcailiao/delete'),
             method: 'post',
             data: this.$http.adornData(ids, false)
           }).then(({data}) => {
