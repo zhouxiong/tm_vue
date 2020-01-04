@@ -148,8 +148,9 @@
                 将文件拖到此处，或
                 <em>点击上传</em>
             </span>
-
+            <!--
             <div class="el-upload__tip" slot="tip">只能上传Excel文件，且不超过500kb</div>
+            -->
           </el-upload>
 
           <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
@@ -458,7 +459,7 @@ export default {
               n[this.curveIdList[i].wcNo] = true;
               r.push(this.curveIdList[i].wcNo);
               x.push(this.curveIdList[i].wcX);
-          
+
             }
           // if (this.curveIdList[i].wcNo === r[0]) {
                 // x.push(this.curveIdList[i].wcX);
@@ -584,7 +585,7 @@ export default {
       this.dataForm.clPaihao = this.dataForm.clPaihao.replace(/[\W]/g, "");
       this.dataForm.clChangjia = this.dataForm.clChangjia.replace(/[\W]/g, "");
       this.dataForm.clWendu = this.dataForm.clWendu.replace(/[^\.\d]/g, "");
-      this.dataForm.clMidu = this.dataForm.clMidu.replace(/[^\.\d]/g, "");
+      this.dataForm.clMidu = this.dataForm.clMidu.replace(/[\W]/g, "");
       this.dataForm.clC = this.dataForm.clC.replace(/[^\.\d]/g, "");
       this.dataForm.clP = this.dataForm.clP.replace(/[^\.\d]/g, "");
       this.dataForm.clBosongbi = this.dataForm.clBosongbi.replace(/[^\.\d]/g, "");
@@ -592,7 +593,7 @@ export default {
       this.dataForm.clEtan = this.dataForm.clEtan.replace(/[^\.\d]/g, "");
       this.dataForm.clFail = this.dataForm.clFail.replace(/[^\.\d]/g, "");
       this.dataForm.clSigy = this.dataForm.clSigy.replace(/[^\.\d]/g, "");
-    
+
     }
   }
 };
