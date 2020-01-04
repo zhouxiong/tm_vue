@@ -189,10 +189,7 @@
         addOrUpdateVisible: false,
         exportVisible:false,
         options: [
-          {
-          value: '',
-          label: ''
-        },{
+         {
           value: '金属',
           label: '金属'
         }, {
