@@ -1,6 +1,6 @@
 <template>
   <div class="mod-config">
-    <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()">
+    <el-form :inline="true" :model="dataForm" @keyup.enter.native="getDataList()" >
       <el-form-item>
         <el-input v-model="dataForm.clNo" placeholder="材料编号" class="inputCls"  clearable @input="getDataList()"></el-input>
       </el-form-item>
@@ -309,4 +309,28 @@
   .inputCls{
      width:160px;
   }
+
+.el-table th > .cell {
+    position: relative;
+    word-wrap: normal;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: 
+    white;
+}
+.el-table__header th, .el-table__header tr {
+
+background-color: #17B3A3;
+
+color: black;
+
+}
+a {
+    color: 
+    #373737;
+    text-decoration: none;
+}
 </style>

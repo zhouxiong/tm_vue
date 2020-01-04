@@ -39,8 +39,8 @@
               :disabled="this.str?true:false"
             ></el-input>
           </el-form-item>
-          <el-form-item label="温度" prop="clWendu">
-            <el-input v-model="dataForm.clWendu" placeholder="温度" :disabled="this.str?true:false"></el-input>
+          <el-form-item label="温度" prop="clWendu"  >
+            <el-input v-model="dataForm.clWendu" placeholder="温度" :disabled="this.str?true:false" @keyup.native="proving"></el-input>
           </el-form-item>
           <el-form-item label="厂家" prop="clChangjia">
             <el-input
@@ -55,6 +55,7 @@
               v-model="dataForm.clBosongbi"
               placeholder="泊松比"
               :disabled="this.str?true:false"
+               @keyup.native="proving"
             ></el-input>
           </el-form-item>
           <el-form-item label="材料密度(t/mm3)" prop="clMidu">
@@ -62,6 +63,7 @@
               v-model="dataForm.clMidu"
               placeholder="材料密度(t/mm3)"
               :disabled="this.str?true:false"
+              @keyup.native="proving"
             ></el-input>
           </el-form-item>
 
@@ -70,6 +72,7 @@
               v-model="dataForm.clMoliang"
               placeholder="弹性模量(Mpa)"
               :disabled="this.str?true:false"
+              @keyup.native="proving"
             ></el-input>
           </el-form-item>
           <el-form-item label="SIGY(Mpa)" prop="clSigy">
@@ -77,19 +80,20 @@
               v-model="dataForm.clSigy"
               placeholder="SIGY(Mpa)"
               :disabled="this.str?true:false"
+              @keyup.native="proving"
             ></el-input>
           </el-form-item>
           <el-form-item label="ETAN" prop="clEtan">
-            <el-input v-model="dataForm.clEtan" placeholder="ETAN" :disabled="this.str?true:false"></el-input>
+            <el-input v-model="dataForm.clEtan" placeholder="ETAN" :disabled="this.str?true:false" @keyup.native="proving"></el-input>
           </el-form-item>
           <el-form-item label="FAIL" prop="clFail">
-            <el-input v-model="dataForm.clFail" placeholder="FAIL" :disabled="this.str?true:false"></el-input>
+            <el-input v-model="dataForm.clFail" placeholder="FAIL" :disabled="this.str?true:false" @keyup.native="proving"></el-input>
           </el-form-item>
           <el-form-item label="C" prop="clC">
-            <el-input v-model="dataForm.clC" placeholder="C" :disabled="this.str?true:false"></el-input>
+            <el-input v-model="dataForm.clC" placeholder="C" :disabled="this.str?true:false" @keyup.native="proving"></el-input>
           </el-form-item>
           <el-form-item label="P" prop="clP">
-            <el-input v-model="dataForm.clP" placeholder="P" :disabled="this.str?true:false"></el-input>
+            <el-input v-model="dataForm.clP" placeholder="P" :disabled="this.str?true:false" @keyup.native="proving"></el-input>
           </el-form-item>
           <el-form-item label="分类" prop="clFenleiId">
             <el-select
@@ -280,12 +284,12 @@ export default {
         toolbox: {
           show: true,
           feature: {
-            mark: { show: true },
-            dataZoom: { show: true },
+            // mark: { show: true },
+            // dataZoom: { show: true },
             dataView: { show: true, readOnly: false },
             // magicType: { show: true, type: ["line", "bar"] },
-            restore: { show: true },
-            saveAsImage: { show: true }
+            // restore: { show: true },
+            // saveAsImage: { show: true }
           }
         },
         //   option: Line_options,
@@ -448,8 +452,15 @@ export default {
             this.curveIdList[i].wcNo != null &&
             this.curveIdList[i].wcNo != ""
           ) {
-            r.push(this.curveIdList[i].wcNo);
-            x.push(this.curveIdList[i].wcX);
+            if (!n[this.curveIdList[i].wcNo]){
+              n[this.curveIdList[i].wcNo] = true;
+              r.push(this.curveIdList[i].wcNo);
+              x.push(this.curveIdList[i].wcX);
+          
+            }
+          // if (this.curveIdList[i].wcNo === r[0]) {
+                // x.push(this.curveIdList[i].wcX);
+           //}
           }
         }
         //if (!this.curveIdList[i].wcXishu) {
@@ -474,7 +485,7 @@ export default {
           k++ //
         ) {
           if (r[i] === this.curveIdList[k].wcNo) {
-            this.$set(temp, "name", this.curveIdList[i].wcNo);
+            this.$set(temp, "name", this.curveIdList[k].wcNo);
             this.$set(temp, "type", "line");
             //  this.option.series.push(temp)
             //tempList.push(this.curveIdList[k].wcY)
@@ -570,6 +581,16 @@ export default {
       this.dataForm.clName = this.dataForm.clName.replace(/[\W]/g, ""); //数字, 字符, _ .
       this.dataForm.clPaihao = this.dataForm.clPaihao.replace(/[\W]/g, "");
       this.dataForm.clChangjia = this.dataForm.clChangjia.replace(/[\W]/g, "");
+      this.dataForm.clWendu = this.dataForm.clWendu.replace(/[^\.\d]/g, "");
+      this.dataForm.clMidu = this.dataForm.clMidu.replace(/[^\.\d]/g, "");
+      this.dataForm.clC = this.dataForm.clC.replace(/[^\.\d]/g, "");
+      this.dataForm.clP = this.dataForm.clP.replace(/[^\.\d]/g, "");
+      this.dataForm.clBosongbi = this.dataForm.clBosongbi.replace(/[^\.\d]/g, "");
+      this.dataForm.clMoliang = this.dataForm.clMoliang.replace(/[^\.\d]/g, "");
+      this.dataForm.clEtan = this.dataForm.clEtan.replace(/[^\.\d]/g, "");
+      this.dataForm.clFail = this.dataForm.clFail.replace(/[^\.\d]/g, "");
+      this.dataForm.clSigy = this.dataForm.clSigy.replace(/[^\.\d]/g, "");
+    
     }
   }
 };
