@@ -9,6 +9,9 @@
       <main-sidebar />
       <div class="site-content__wrapper" :style="{ 'min-height': documentClientHeight + 'px' }">
         <main-content v-if="!$store.state.common.contentIsNeedRefresh" />
+        <div class="footer-wrapper">
+          <span> CopyRight@2020 慧勒工程软件（上海）有限公司 TM_v1.0</span>
+      </div>
       </div>
     </template>
   </div>
@@ -88,3 +91,9 @@
     }
   }
 </script>
+<style scoped>
+.footer-wrapper{
+  font-size: 24px;
+   text-align: center;
+}
+</style>

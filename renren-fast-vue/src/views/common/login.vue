@@ -5,7 +5,7 @@
         <div class="brand-info">
           <h2 class="brand-info__text">Trim Material系统平台</h2>
           <p class="brand-info__intro"></p>
-        </div>
+        </div>       
         <div class="login-main">
           <h3 class="login-title">管理员登录</h3>
           <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" status-icon>
