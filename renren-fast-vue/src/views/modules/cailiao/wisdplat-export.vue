@@ -91,6 +91,7 @@
         init(id) {
           this.dataForm.clId=id;
           this.visible = true;
+
         },
         handleFile(file) {
           location.href = file.url;
@@ -142,7 +143,7 @@
               }
               })
                 this.$http({
-                  url: this.$http.adornUrl('/cailiao/wisdplatcailiao/download'),
+                  url: this.$http.adornUrl(`/cailiao/wisdplatcailiao/download/${this.dataForm.clId}`),
                   method: 'post',
                   responseType: 'arraybuffer',
                   data: this.$http.adornData({

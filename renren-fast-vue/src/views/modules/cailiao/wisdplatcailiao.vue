@@ -32,7 +32,7 @@
         <el-button type="info" style="margin-left: 8px" @click="clearHandle" icon="redo">重置</el-button>
         <el-button v-if="isAuth('cailiao:wisdplatcailiao:save')" type="primary" @click="addOrUpdateHandle()">新增</el-button>
         <el-button v-if="isAuth('cailiao:wisdplatcailiao:delete')" type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">删除</el-button>
-        <el-button type="success" @click="exportHandle()"   :disabled="dataListSelections.length<=0 || dataListSelections.length>1">导出</el-button>
+        <el-button type="success" @click="exportHandle()"   :disabled="dataListSelections.length<=0 ">导出</el-button>
 
       </el-form-item>
     </el-form>
